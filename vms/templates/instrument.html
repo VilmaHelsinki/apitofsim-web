@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instrument Control</title>
+</head>
+<body>
+    <h1>Instrument Control</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.voltage1.label }}<br>
+            {{ form.voltage1() }}
+        </p>
+        <p>
+            {{ form.voltage2.label }}<br>
+            {{ form.voltage2() }}
+        </p>
+        <p>
+            {{ form.voltage3.label }}<br>
+            {{ form.voltage3() }}
+        </p>
+        <p>
+            {{ form.voltage4.label }}<br>
+            {{ form.voltage4() }}
+        </p>
+        <p>
+            {{ form.voltage5.label }}<br>
+            {{ form.voltage5() }}
+        </p>
+        <p>
+            {{ form.dropdown.label }}<br>
+            {{ form.dropdown() }}
+        </p>
+        <p><input type="submit" value="Submit"></p>
+    </form>
+</body>
+</html>
