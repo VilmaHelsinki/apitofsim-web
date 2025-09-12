@@ -26,11 +26,11 @@ FROM python:3.13-slim-bookworm
 # will fail.
 
 # Copy the application from the builder
-COPY --from=builder --chown=app:app /app /app
+COPY --from=builder /app /app
 
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run Flask
 EXPOSE 5000
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["flask", "--app", "vms", "run", "--host=0.0.0.0"]
