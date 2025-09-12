@@ -13,10 +13,10 @@ WORKDIR /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --locked --no-install-project --no-dev
+    uv sync --locked --no-install-project --no-dev --extra=deploy
 COPY . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked --no-dev
+    uv sync --locked --no-dev --extra=deploy
 
 
 # Then, use a final image without uv
@@ -33,4 +33,4 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 # Run Flask
 EXPOSE 8080
-CMD ["flask", "--app", "vms", "run", "--host=0.0.0.0", "--port", "8080", "--with-threads"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "vms:app"]
