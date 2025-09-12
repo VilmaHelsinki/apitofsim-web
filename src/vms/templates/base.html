@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        input[type=range].vertical {
+            writing-mode: vertical-lr;
+            direction: rtl;
+            vertical-align: middle;
+        }
+        body {
+            background-image: url("{{ url_for('static', filename='img/ifionlyhadabrain.png') }}");
+            background-repeat: no-repeat;
+            background-position: bottom right;
+            background-size: auto 200px;
+            background-attachment: fixed;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen">
+    <main class="p-4">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
