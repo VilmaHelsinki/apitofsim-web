@@ -32,5 +32,5 @@ COPY --from=builder /app /app
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run Flask
-EXPOSE 5000
-CMD ["flask", "--app", "vms", "run", "--host=0.0.0.0"]
+EXPOSE 8080
+CMD ["flask", "--app", "vms", "run", "--host=0.0.0.0", "--port", "8080", "--with-threads"]
