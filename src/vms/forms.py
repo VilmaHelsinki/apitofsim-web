@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, Form
-from wtforms import SelectField, FloatField, FormField, HiddenField
+from wtforms import SelectField, FloatField, FormField, HiddenField, IntegerField
 from wtforms.validators import InputRequired
 from vms.utils import PairedRangeInputWidget
 
@@ -83,19 +83,90 @@ def mk_instrument_form(hidden):
             default=4.48e-3,
             validators=[InputRequired()],
         )
+        radius_at_smallest_cross_section_skimmer = maybe_field(
+            FloatField,
+            "Radius at smallest cross section skimmer (m)",
+            default=5.0e-4,
+            validators=[InputRequired()],
+        )
+        angle_of_skimmer = maybe_field(
+            FloatField,
+            "Angle of skimmer (multiple of PI)",
+            default=0.25,
+            validators=[InputRequired()],
+        )
+        dc_quadrupole = maybe_field(
+            FloatField,
+            "DC quadrupole",
+            default=0.0,
+            validators=[InputRequired()],
+        )
+        ac_quadrupole = maybe_field(
+            FloatField,
+            "AC quadrupole",
+            default=200.0,
+            validators=[InputRequired()],
+        )
+        radiofrequency_quadrupole = maybe_field(
+            FloatField,
+            "Radiofrequency quadrupole",
+            default=1.3e6,
+            validators=[InputRequired()],
+        )
+        half_distance_between_quadrupole_rods = maybe_field(
+            FloatField,
+            "Half-distance between quadrupole rods",
+            default=6.0e-3,
+            validators=[InputRequired()],
+        )
 
     return InstrumentForm
 
 
-HiddenInstrumentForm = mk_instrument_form(hidden=True)
-InstrumentForm = mk_instrument_form(hidden=False)
+BuiltInInstrumentForm = mk_instrument_form(hidden=True)
+CustomInstrumentForm = mk_instrument_form(hidden=False)
+
+
+class ConstantsForm(Form):
+    fragmentation_energy_ = FloatField(default=0, validators=[InputRequired()])
+    energy_max_density_of_state = FloatField(
+        default=2.0e5, validators=[InputRequired()]
+    )
+    energy_max_rate_constant = FloatField(default=3.0e4, validators=[InputRequired()])
+    energy_resolution = FloatField(default=1.0, validators=[InputRequired()])
+    gas_molecule_radius = FloatField(default=2.46e-10, validators=[InputRequired()])
+    gas_molecule_mass = FloatField(default=4.8506e-26, validators=[InputRequired()])
+    adiabatic_index = FloatField(default=4.8506e-26, validators=[InputRequired()])
+
+
+class SimulationForm(Form):
+    realizations = IntegerField(default=1000, validators=[InputRequired()])
+    iterations_eq1 = IntegerField(default=1000, validators=[InputRequired()])
+    iterations_eq2 = IntegerField(default=1000, validators=[InputRequired()])
+    solved_points = IntegerField(default=1000, validators=[InputRequired()])
+    tolerance = FloatField(default=1.0e-8, validators=[InputRequired()])
+
+
+def get_chain_choices():
+    from vms.app import CHAINS
+
+    return [(chain, chain) for chain in CHAINS.keys()]
+
+
+def get_chain_default():
+    from vms.app import CHAINS
+
+    return list(CHAINS.keys())[0]
 
 
 class SettingsForm(FlaskForm):
     voltage = FormField(VoltageForm)
     chain = SelectField(
         "Compound chain",
-        choices=[("1ABisopooh1brd1w", "1ABisopooh1brd1w")],
+        choices=get_chain_choices,
+        default=get_chain_default,
         validators=[InputRequired()],
     )
-    instrument = FormField(InstrumentForm)
+    instrument = FormField(BuiltInInstrumentForm)
+    constants = FormField(ConstantsForm)
+    simulation = FormField(SimulationForm)

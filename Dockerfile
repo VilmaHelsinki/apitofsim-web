@@ -30,6 +30,7 @@ COPY --from=builder /app /app
 
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
+ENV CHAINS=/app/config_list_docker.json
 
 # Run Flask
 EXPOSE 8080

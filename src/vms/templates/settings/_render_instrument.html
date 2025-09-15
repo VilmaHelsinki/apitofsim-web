@@ -1,0 +1,11 @@
+{% from "ui/_lightbox.html" import lightbox %}
+
+<div class="flex flex-row gap-4 py-8">
+    <div class="md:w-l flex-none">
+        {# md:w-l flex-none  ||| basis-1/2 #}
+        {{ lightbox('img/measurements.svg', img_class='max-h-[320px] m-auto py-4') }}
+    </div>
+    <div>
+        {% include "ui/_table_form.html" %}
+    </div>
+</div>
