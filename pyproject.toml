@@ -5,15 +5,19 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "flask>=3.1.2",
-    "flask-wtf>=1.2.2",
     "matplotlib>=3.10.6",
+    "minify-html-onepass>=0.16.4",
+    "pip>=25.2",
+    "quart>=0.20.0",
+    "quart-wtforms>=1.0.3",
+    "ray[default]>=2.49.1",
+    "virtualenv>=20.34.0",
     "wtforms>=3.2.1",
 ]
 
 [project.optional-dependencies]
 deploy = [
-    "gunicorn>=23.0.0",
+    "hypercorn>=0.17.0",
 ]
 
 [build-system]

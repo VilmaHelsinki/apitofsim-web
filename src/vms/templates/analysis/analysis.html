@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% from "ui/_lightbox.html" import lightbox %}
+
+{% block title %}Analysis{% endblock %}
+
+{% block body_attrs %}
+    hx-ext="sse"
+    sse-connect="/analysis/updates?jobid={{ jobid }}"
+    sse-swap="message"
+    sse-close="done"
+{% endblock %}
+
+{% block content %}
+    {% include "analysis/body.html" %}
+    <script>
+    document.body.addEventListener('htmx:sseBeforeMessage', function (e) {
+        console.log("SSE Message received:", e.detail);
+    })
+    </script>
+{% endblock %}

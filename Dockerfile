@@ -32,6 +32,7 @@ COPY --from=builder /app /app
 ENV PATH="/app/.venv/bin:$PATH"
 ENV CHAINS=/app/config_list_docker.json
 
-# Run Flask
+# Run Quart
 EXPOSE 8080
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "vms:app"]
+# Only ever use 1 worker since it is stateful
+CMD ["hypercorn", "-w", "1", "-b", "0.0.0.0:8080", "vms:app"]

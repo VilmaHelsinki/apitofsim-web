@@ -1,4 +1,5 @@
-from flask_wtf import FlaskForm, Form
+from quart_wtf import QuartForm
+from wtforms import Form
 from wtforms import SelectField, FloatField, FormField, HiddenField, IntegerField
 from wtforms.validators import InputRequired
 from vms.utils import PairedRangeInputWidget
@@ -159,7 +160,7 @@ def get_chain_default():
     return list(CHAINS.keys())[0]
 
 
-class SettingsForm(FlaskForm):
+class SettingsForm(QuartForm):
     voltage = FormField(VoltageForm)
     chain = SelectField(
         "Compound chain",

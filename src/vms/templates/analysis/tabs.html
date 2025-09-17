@@ -1,0 +1,29 @@
+{% from "ui/_tabs.html" import progress_tab %}
+
+{% call progress_tab('queue', statuses['queue']) %}
+    Queue
+{% endcall %}
+{% call progress_tab('skimmer', statuses['skimmer']) %}
+    Simulating skimmertick
+{% endcall %}
+{% call progress_tab('densityandr', statuses['densityandr']) %}
+    Computing densities
+{% endcall %}
+{% call progress_tab('apitof', statuses['apitof']) %}
+    Simulating APi-ToF MS
+{% endcall %}
+
+<li role="button" class="mt-20">
+    <button type="submit" class="
+        cursor-pointer
+        hover:scale-105
+        bg-red-500 text-white
+        inline-flex items-center px-4 py-3
+        rounded-lg w-full">
+        &nbsp;Cancel
+    </button>
+</li>
+
+{% if processing is defined %}
+    <script x-init="current_tab = '{{ processing }}'"></script>
+{% endif %}

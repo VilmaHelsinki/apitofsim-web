@@ -20,7 +20,7 @@ document.addEventListener("click", () => {
     {# TODO: Decide whether autocomplete should be on and fix up conflicts with htmx #}
     <form method="POST" class="mt-4" autocomplete="off">
         {{ form.hidden_tag() }}
-        {% call tab_container('voltagecontrols') %}
+        {% call tab_container(default='voltagecontrols') %}
             <ul
                 class="flex-column space-y space-y-4 md:me-4 mb-4 md:mb-0 mt-6"
                 role="tablist">
@@ -142,7 +142,5 @@ document.addEventListener("click", () => {
                 {% endcall %}
             </div>
         {% endcall %}
-        <div class="flex flex-row items-end justify-center-safe gap-8 w-full mt-8">
-        </div>
     </form>
 {% endblock %}
